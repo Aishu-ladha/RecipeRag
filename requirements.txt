@@ -1,5 +1,7 @@
 streamlit>=1.36.0
-chromadb[duckdb]>=0.5.5        # Add [duckdb] to install the backend
+chromadb[duckdb]>=0.5.5
+duckdb>=1.8.1
+pyarrow>=12.0.1
 sentence-transformers>=3.0.1
 pandas>=2.2.2
 numpy>=1.26.4
