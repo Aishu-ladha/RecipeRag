@@ -31,7 +31,15 @@ class RAGEngine:
             model_name="all-MiniLM-L6-v2"
         )
 
-        client = chromadb.Client()
+        # client = chromadb.Client()
+        client = chromadb.Client(
+            settings=chromadb.config.Settings(
+                chroma_db_impl="duckdb+parquet",
+                persist_directory=".chromadb"  # writable folder for Streamlit Cloud
+            )
+        )
+
+
         self.db = client.create_collection(
             name="recipes",
             embedding_function=embedding_func
