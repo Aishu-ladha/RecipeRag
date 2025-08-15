@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Recipe & Nutrition RAG (Dietary Restrictions)
 
 A minimal, Python-only RAG system that retrieves recipes with nutrition-aware filtering and optional LLM generation.
@@ -52,3 +53,6 @@ CSV headers:
 - You can replace `Streamlit` with `Gradio` or deploy to HuggingFace Spaces.
 - For larger datasets, consider chunking strategies & more advanced retrievers.
 - Always validate nutrition & allergy data integrity before use.
+=======
+# RecipeRag
+>>>>>>> 15c70c0b8f2dcd92fb0bbc1a204a494f07530261
