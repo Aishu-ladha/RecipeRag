@@ -1,0 +1,7 @@
+id,title,ingredients,instructions,calories,protein_g,carbs_g,fat_g,fiber_g,sodium_mg,sugar_g,tags,allergens,cuisine
+1,Chickpea Spinach Curry,"chickpeas;spinach;onion;tomato;garlic;ginger;olive oil;spices","Saute aromatics, add spices, tomatoes, then chickpeas and spinach. Simmer.",380,18,52,10,12,420,9,"vegan;gluten_free;high_fiber","",Indian
+2,Grilled Chicken Salad,"chicken breast;lettuce;cucumber;tomato;olive oil;lemon;pepper;salt","Grill chicken, toss with veggies and dressing.",320,35,10,12,5,300,5,"high_protein;gluten_free;low_carb","",International
+3,Overnight Oats,"rolled oats;almond milk;chia seeds;banana;honey","Mix and refrigerate overnight.",280,9,44,7,8,120,14,"vegetarian;high_fiber","nuts",American
+4,Paneer Tikka (GF)","paneer;yogurt;spices;lemon;bell peppers;onion","Marinate and grill until charred.",450,28,12,28,2,600,7,"vegetarian;gluten_free","dairy",Indian
+5,Brown Rice Veg Bowl,"brown rice;broccoli;carrot;tofu;soy sauce;sesame oil;garlic","Stir-fry veggies and tofu; serve over rice.",520,20,70,16,10,720,10,"vegan;high_fiber","soy",Asian
+6,Quinoa Lentil Khichdi,"quinoa;moong dal;vegetables;ghee;spices","Pressure cook until soft porridge-like.",400,16,62,10,9,480,6,"vegetarian;gluten_free;diabetic_friendly","dairy",Indian
