@@ -10,7 +10,6 @@ except ImportError:
 
 import chromadb
 from chromadb.utils import embedding_functions
-from chromadb.config import Settings
 from transformers import pipeline
 import os
 
@@ -24,7 +23,7 @@ class RAGEngine:
             model="google/flan-t5-large"
         )
 
-       def load(self, data_path="data/recipes.csv"):
+    def load(self, data_path="data/recipes.csv"):   # ✅ fixed indentation
         print("[INFO] Loading recipe data...")
         ext = os.path.splitext(data_path)[1].lower()
         df = pd.read_csv(data_path) if ext == ".csv" else pd.read_parquet(data_path)
