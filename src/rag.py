@@ -20,9 +20,10 @@ class RAGEngine:
         self.db = None
         self.hf_llm = pipeline(
             "text2text-generation",
-            model="google/flan-t5-large",
-            device=-1  # ✅ force CPU
+            model="google/flan-t5-base",
+            device=-1  # CPU
         )
+
 
     def load(self, data_path="data/recipes.csv"):   # ✅ fixed indentation
         print("[INFO] Loading recipe data...")
