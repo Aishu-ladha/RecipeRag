@@ -24,46 +24,25 @@ class RAGEngine:
             model="google/flan-t5-large"
         )
 
-    def load(self, data_path="data/recipes.csv"):
+       def load(self, data_path="data/recipes.csv"):
         print("[INFO] Loading recipe data...")
-
         ext = os.path.splitext(data_path)[1].lower()
-        if ext == ".csv":
-            df = pd.read_csv(data_path)
-        elif ext == ".parquet":
-            df = pd.read_parquet(data_path)
-        else:
-            raise ValueError("Unsupported file format. Use CSV or Parquet.")
+        df = pd.read_csv(data_path) if ext == ".csv" else pd.read_parquet(data_path)
 
         print(f"[INFO] Loaded {len(df)} recipes.")
 
-        # Initialize Chroma with embeddings
         embedding_func = embedding_functions.SentenceTransformerEmbeddingFunction(
             model_name="all-MiniLM-L6-v2"
         )
 
-        client = chromadb.Client(
-            Settings(
-                chroma_db_impl="duckdb+parquet",
-                persist_directory=".chromadb"  # writable folder for Streamlit Cloud
-            )
-        )
+        client = chromadb.PersistentClient(path=".chromadb")
 
-        # Create or reuse collection
         if "recipes" in [c.name for c in client.list_collections()]:
-            self.db = client.get_collection(
-                name="recipes",
-                embedding_function=embedding_func
-            )
-            print("[INFO] Using existing ChromaDB collection.")
+            self.db = client.get_collection(name="recipes", embedding_function=embedding_func)
+            print("[INFO] Reusing existing ChromaDB collection.")
         else:
-            self.db = client.create_collection(
-                name="recipes",
-                embedding_function=embedding_func
-            )
-            print("[INFO] Created new ChromaDB collection.")
-
-            # Add recipes to vector DB
+            self.db = client.create_collection(name="recipes", embedding_function=embedding_func)
+            print("[INFO] Created new ChromaDB collection and adding data...")
             for idx, row in df.iterrows():
                 self.db.add(
                     ids=[str(idx)],
@@ -73,7 +52,7 @@ class RAGEngine:
                         "ingredients": row.get("ingredients", "")
                     }]
                 )
-            print("[INFO] Recipes added to collection.")
+            print("[INFO] Recipes added successfully.")
 
     def retrieve(self, query, diets=None, allergens=None, conditions=None):
         if not self.db:
