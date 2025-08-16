@@ -42,12 +42,9 @@ class RAGEngine:
         )
 
         # client = chromadb.Client()
-        client = chromadb.Client(
-            settings=chromadb.config.Settings(
-                chroma_db_impl="duckdb+parquet",
-                persist_directory=".chromadb"  # writable folder for Streamlit Cloud
-            )
-        )
+       # Use persistent client (saves DB files to .chromadb folder)
+        client = chromadb.PersistentClient(path=".chromadb")
+
 
 
         self.db = client.create_collection(
