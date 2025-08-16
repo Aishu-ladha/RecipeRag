@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+working link https://aishu-ladha-reciperag-app-usrdft.streamlit.app/
 # Recipe & Nutrition RAG (Dietary Restrictions)
 
 A minimal, Python-only RAG system that retrieves recipes with nutrition-aware filtering and optional LLM generation.
