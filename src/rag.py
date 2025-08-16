@@ -10,6 +10,7 @@ except ImportError:
 
 import chromadb
 from chromadb.utils import embedding_functions
+from chromadb.config import Settings
 from transformers import pipeline
 import os
 
@@ -41,28 +42,38 @@ class RAGEngine:
             model_name="all-MiniLM-L6-v2"
         )
 
-        # client = chromadb.Client()
-       # Use persistent client (saves DB files to .chromadb folder)
-        client = chromadb.PersistentClient(path=".chromadb")
-
-
-
-        self.db = client.create_collection(
-            name="recipes",
-            embedding_function=embedding_func
+        client = chromadb.Client(
+            Settings(
+                chroma_db_impl="duckdb+parquet",
+                persist_directory=".chromadb"  # writable folder for Streamlit Cloud
+            )
         )
 
-        # Add recipes to vector DB
-        for idx, row in df.iterrows():
-            self.db.add(
-                ids=[str(idx)],
-                documents=[row["instructions"]],
-                metadatas=[{
-                    "title": row.get("title", ""),
-                    "ingredients": row.get("ingredients", "")
-                }]
+        # Create or reuse collection
+        if "recipes" in [c.name for c in client.list_collections()]:
+            self.db = client.get_collection(
+                name="recipes",
+                embedding_function=embedding_func
             )
-        print("[INFO] Database loaded successfully.")
+            print("[INFO] Using existing ChromaDB collection.")
+        else:
+            self.db = client.create_collection(
+                name="recipes",
+                embedding_function=embedding_func
+            )
+            print("[INFO] Created new ChromaDB collection.")
+
+            # Add recipes to vector DB
+            for idx, row in df.iterrows():
+                self.db.add(
+                    ids=[str(idx)],
+                    documents=[row["instructions"]],
+                    metadatas=[{
+                        "title": row.get("title", ""),
+                        "ingredients": row.get("ingredients", "")
+                    }]
+                )
+            print("[INFO] Recipes added to collection.")
 
     def retrieve(self, query, diets=None, allergens=None, conditions=None):
         if not self.db:
