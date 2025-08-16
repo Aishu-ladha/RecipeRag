@@ -1,8 +1,18 @@
 import pandas as pd
+
+# Patch sqlite3 with pysqlite3 to fix ChromaDB error
+try:
+    __import__("pysqlite3")
+    import sys
+    sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+except ImportError:
+    pass
+
 import chromadb
 from chromadb.utils import embedding_functions
 from transformers import pipeline
 import os
+
 
 class RAGEngine:
     def __init__(self, top_k=4):
